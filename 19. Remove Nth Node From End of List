@@ -1,0 +1,34 @@
+19. Remove Nth Node From End of List
+
+APPROACH1->WE CAN CALCULATE THE LENGTH OF THE LINKED LIST AND THAN REACH THE LEN-N TH POSITION AND THEN LINK NO NEXT NODE OF THE NODE THAT WILL BE DELETED 
+TIME COMPLEXIETY IS o(N) FOR FINDING THE LENGTH OF LINKED LIST AND O(N-n) FOR TRAVERSING TO NODE JUST BEFORE THE NODE TO BE DELETED
+
+
+APPROACH2--
+HERE FAST POINTER IS MOVING AND IT WILL MOVE TO LENGHT OF LINKED LIST SO THE TIME COMPLEXIETY IS O(N) AND SPACE COMPLEXIETY IS O(1) IN BOTH THE CASES
+class Solution {
+public:
+    ListNode* removeNthFromEnd(ListNode* head, int n) {
+        ListNode* dummy = new ListNode(0);
+        dummy->next = head;
+        ListNode *fast = dummy, *slow = dummy;
+
+        // Move fast pointer to the nth node from the beginning
+        for (int i = 0; i < n; ++i) {
+            fast = fast->next;
+        }
+
+        // Move fast to the end, maintaining the gap of n between fast and slow
+        while (fast->next != nullptr) {
+            fast = fast->next;
+            slow = slow->next;
+        }
+
+        // Remove the nth node from the end
+        ListNode* temp = slow->next;
+        slow->next = slow->next->next;
+        delete temp;
+
+        return dummy->next; // Return the updated head
+    }
+};
