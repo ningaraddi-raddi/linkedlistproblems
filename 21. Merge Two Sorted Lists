@@ -1,0 +1,50 @@
+21. Merge Two Sorted Lists
+if we do this problem by collecting all data of given linked list into array and then sort that array and conver that sorted array into linked list i would take 
+time complexiety of O(n1)+O(n2)+O(nlogn)+O(n) where traversing both the linked list would take O(n1)+O(n2) and for sorting the given array would take nlogn time and converting array to linked list would take
+O(n)
+space complexiety is O(n)+O(n) where for array and new linked list
+
+
+Approach 2--
+WE USE DUMMY NODE IN PROBLEMS WHICH INVOLVES THE CREATION OF NEW LIST
+timecomplexiety of the code is O(n1+n2) and space complexiety is O(1)
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* mergeTwoLists(ListNode* list1, ListNode* list2) {
+        ListNode *dummy=new ListNode(-1);
+        ListNode *temp=dummy;
+        ListNode *cur1=list1;
+        ListNode *cur2=list2;
+        //as the teo given list are already sorted so our first node will be the first node of either list1 or list 2
+        while(cur1!=NULL && cur2!=NULL){
+            if(cur1->val<=cur2->val){
+                temp->next=cur1;
+                temp=temp->next;
+                cur1=cur1->next;
+
+            }
+            else{
+                temp->next=cur2;
+                temp=cur2;
+                cur2=cur2->next;
+            }
+        }
+        if(cur1==NULL){
+            temp->next=cur2;
+        }
+        if(cur2==NULL){
+            temp->next=cur1;
+        }
+        return dummy->next;
+    }
+};
